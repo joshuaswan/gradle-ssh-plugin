@@ -6,11 +6,7 @@ env:
 - JAVA_OPTS="-Xmx1024m -Xms1024m"
 
 install:
-- mkdir -m 700 -p -v $HOME/.ssh
-- ssh-keygen -t rsa -N '' -f $HOME/.ssh/id_rsa
-- cat $HOME/.ssh/id_rsa.pub > $HOME/.ssh/authorized_keys
-- ssh -o StrictHostKeyChecking=no -o HostKeyAlgorithms=ssh-rsa -o UserKnownHostsFile=$HOME/.ssh/known_hosts -i $HOME/.ssh/id_rsa localhost id
-- ssh-keygen -H -F localhost
+- ./acceptance-test/setup-local-ssh.sh
 
 
 script:

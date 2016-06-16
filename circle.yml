@@ -1,0 +1,17 @@
+machine:
+  environment:
+    TERM: dumb
+    JAVA_OPTS: -Xmx1024m -Xms1024m
+
+test:
+  pre:
+    - ./acceptance-test/setup-local-ssh.sh
+  post:
+    - for d in **/build/test-results; do cp -a "$d" "$CIRCLE_TEST_REPORTS/${d%%/*}"; done
+    - for d in **/build/reports/tests; do cp -a "$d" "$CIRCLE_ARTIFACTS/${d%%/*}"; done
+
+deployment:
+  release:
+    tag: /[0-9]+(\.[0-9]+)*/
+    commands:
+      - ./gradlew bintrayUpload
